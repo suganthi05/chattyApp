@@ -1,45 +1,50 @@
 import React, {Component} from 'react';
-
-function ChattyNav() {
-	return (
-		<nav className="navbar">
-		  <a href="/" className="navbar-brand">Chatty</a>
-		</nav>
-	);
-}
-
-function ChattyBody() {
-	return (
-	<main className="messages">
-		<div className="message">
-			<span className="message-username">Anonymous1</span>
-			<span className="message-content">I won't be impressed with technology until I can download food.</span>
-		</div>
-		<div className="message system">
-			Anonymous1 changed their name to nomnom.
-		</div>
-	</main>
-	);
-}
-
-function ChattyFooter() {
-	return (
-		<footer className="chatbar">
-  			<input className="chatbar-username" placeholder="Your Name (Optional)" />
-  			<input className="chatbar-message" placeholder="Type a message and hit ENTER" />
-		</footer>
-	);
-}
+import ChatBar from './ChatBar.jsx';
+import NavBar from './NavBar.jsx';
+import MessageList from './MessageList.jsx';
 
 class App extends Component {
-  render() {
-    return (
-    	<div>
-    		<ChattyNav />
-    		<ChattyBody />
-    		<ChattyFooter />
-    	</div>    
-    );
+
+  constructor(props) {
+    super(props);
+    this.state = {
+	  currentUser: {name:'Bob'},
+	  messages: [
+	    {
+	    id:1,
+	      username: "Bob",
+	      content: "Has anyone seen my marbles?",
+	    },
+	    {
+	    	id:2,
+	      username: "Anonymous",
+	      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
+	    }
+	    
+	  ]
+	};
   }
+    addMessage = content => {
+    	const message = {
+    		id:this.state.messages.length + 3,
+    		usename:this.state.currentUser.name,
+    		content:content
+    	};
+
+    	const messages =this.state.messages.concat(message);
+    	this.setState({messages:messages});
+    };
+  render() {
+      return (
+    	<div>
+    	<NavBar />
+    	<MessageList messages={this.state.messages} />
+    	<ChatBar 
+    	currentUser = {this.state.currentUser}
+    	addMessage = {this.addMessage}
+    	/>
+    	</div>
+    	);  
+    }
 }
 export default App;
