@@ -7,6 +7,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.addMessage = this.addMessage.bind(this);
     this.state = {
 	  currentUser: {name:'Bob'},
 	  messages: [
@@ -20,33 +21,42 @@ class App extends Component {
 	      username: "Anonymous",
 	      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
 	    }
-	    
 	  ]
 	};
   }
-    addMessage = content => {
-    	const message = {
-    		id:this.state.messages.length + 3,
-    		usename:this.state.currentUser.name,
-    		content:content
-    	};
 
-    	const messages =this.state.messages.concat(message);
-    	this.setState({messages:messages});
+  componentDidMount() {
+    console.log("componentDidMount <App />");
+    setTimeout(() => {
+      console.log("Simulating incoming message");
+      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
+      const messages = this.state.messages.concat(newMessage)
+      this.setState({messages: messages})
+    }, 3000);
+  }
+
+  addMessage = content => {
+  	const newMessage = {
+      id:this.state.messages.length + 3,
+      usename:this.state.currentUser.name,
+      content:content
     };
+    const messages =[...this.state.messages,newMessage];
+    this.setState({messages:messages});
+  };
+
   render() {
       return (
     	<div>
     	<NavBar />
-
     	<MessageList messages={this.state.messages} />
-    
     	<ChatBar 
-    	currentUser = {this.state.currentUser}
+    	currentUser = {this.state.currentUser.name}
     	addMessage = {this.addMessage}
     	/>
     	</div>
-    	);  
-    }
+      );  
+  }
 }
 export default App;
+
