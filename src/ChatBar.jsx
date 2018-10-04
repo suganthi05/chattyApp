@@ -7,11 +7,19 @@ class ChatBar extends Component {
 			event.target.value="";
 		}
 	};
+
+	handleKeyPressUser = event =>{
+		if(event.key == 'Enter' || event.keyCode == 13){
+			console.log('Enter here');
+			this.props.changeUser(event.target.value);
+		}
+	}
+
  render() {
    return (
      <footer className="chatbar">
   	   <input className="chatbar-username" placeholder="Your Name (Optional)" 
-  	   value ={this.props.currentUser} />
+  	   onKeyPress ={this.handleKeyPressUser} />
   	   <input className="chatbar-message" placeholder="Type a message and hit ENTER" 
   	   onKeyPress={this.handleKeyPress} />
      </footer>
