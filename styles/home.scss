@@ -25,7 +25,7 @@ body {
   border: 1px solid black;
   display: block;
   height: 40px;
-  line-height: 40px;
+  line-height: 55px;
   margin: 5px;
   padding: 0 9px;
 }
@@ -62,6 +62,7 @@ body {
 .message-username {
   flex: 2;
   font-weight: 700;
+  font-height : 100px;
 }
 
 .navbar {
@@ -87,3 +88,10 @@ body {
   text-decoration: none;
 }
 
+
+.usersOnline {
+  display: block;
+  float: right;
+  line-height: 60px;
+  font-weight: bold;
+}

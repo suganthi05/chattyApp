@@ -7,58 +7,84 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.addMessage = this.addMessage.bind(this);
     this.state = {
-	  currentUser: {name:'Bob'},
-	  messages: []
+	  currentUser: {name:'Anonymous'},
+	  messages: [],
+	  usersOnline : {count:0}
 	};
 	this.socket=null;
   }
-  
-   componentDidMount() {
-  	this.socket = new WebSocket("ws://localhost:3401");
-  	this.socket.onopen = function (event) {
-      console.log("Connected to Server"); 
-    };
-    this.socket.onmessage = (event)=> {
-    	const newMessage = JSON.parse(event.data);
-    	console.log(newMessage, "received new");//
-         const messages = this.state.messages.concat(newMessage)
-         this.setState({messages: messages})//messages
-    }
-    //setTimeout(() => {
-      //console.log("Simulating incoming message");
-      //const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      //const messages = this.state.messages.concat(newMessage)
-      //this.setState({messages: newMessage})//messages
-    //}, 3000);
-  }
-  changeUser = username =>{
-  	this.setState({currentUser:{name:username}})
-   }
 
-  addMessage = content => {
-  	const newMessage = {
-      id:this.state.messages.length + 3,
-      username:this.state.currentUser.name,
-      content:content
+  //Establish WebSocketcommunication between the client and server.
+  componentDidMount() {
+    this.socket = new WebSocket("ws://localhost:3401");
+    this.socket.onopen = function(event) {
+      console.log(`Connected to server at localhost:3401`);
     };
-    this.socket.send(JSON.stringify(newMessage));
+
+  // Handle all messages coming from the Websocket server.
+    this.socket.onmessage = event => {
+    console.log(event);
+    const message = JSON.parse(event.data);
+
+    switch(message.type) {
+      //Browser receives the incomingNotification message and displays the notification.
+      case "incomingNotification":
+        const newNotification = [...this.state.messages, message];
+        this.setState({ messages: newNotification });
+      break;
+
+      //Browser receives the incomingMessage message and displays the messages.
+      case "incomingMessage":
+        const newMessages = [...this.state.messages, message];
+        this.setState({ messages: newMessages,
+                        currentUser: message.username });
+      break;
+
+      //Browser receives the incomingUserCount message and displays the online users count.
+      case "incomingUserCount":
+          this.setState({usersOnline:{count:message.count}});
+        break;
+
+      default:
+          throw new Error("Unknown message type: " + message.type);
+      }
+    }
+  }
+  //Send a postNotification message to the server to notify all connected users of the name change.
+  sendNotification = (newUserName,oldUserName) => {
+    const notification = {
+     content:`**${oldUserName}** changed their name to **${newUserName}**`,
+    type:"postNotification"
+    };
+    this.setState({currentUser:{name:newUserName}});
+    this.socket.send(JSON.stringify(notification));
+  };
+
+//Send a postMessage message to the server to send messages to the server.
+  addMessage = newMessage => {
+  	const sendMessage = {
+      username:this.state.currentUser.name,
+      content:newMessage,
+      type: "postMessage"
+    };
+    this.socket.send(JSON.stringify(sendMessage));
   };
 
   render() {
-      return (
-    	<div>
-    	<NavBar />
-    	<MessageList messages={this.state.messages} />
-    	<ChatBar 
-    	currentUser = {this.state.currentUser.name}
-    	addMessage = {this.addMessage}
-    	changeUser = {this.changeUser}
-    	/>
-    	</div>
-      );  
+    return (
+      <div>
+        <NavBar nav = {this.state.usersOnline.count}/>
+    	  <MessageList messages={this.state.messages} />
+    	  <footer className="chatbar">
+    	  <ChatBar 
+    	    currentUser = {this.state.currentUser.name}
+    	    addMessage = {this.addMessage}
+          sendNotification = {this.sendNotification}
+    	  />
+    	  </footer>
+      </div>
+    );  
   }
 }
 export default App;
-
