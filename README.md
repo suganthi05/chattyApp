@@ -50,4 +50,5 @@ npm run lint
  
 ### Screenshot
 * https://github.com/suganthi05/chattyApp/blob/master/docs/Screenshot%20from%202018-10-07%2019-33-31.png
+
  
