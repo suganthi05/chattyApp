@@ -1,7 +1,7 @@
-React Boilerplate
-=====================
+Chatty 
+=======
 
-A minimal and light dev environment for ReactJS.
+Chatty will allow users to communicate with each other without having to register accounts. It will use React, a popular front-end library created and used heavily by Facebook as well as modern tools for Node including Webpack and Babel.
 
 ### Usage
 
@@ -43,3 +43,12 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+### Chatty App Application
+ * Client - https://github.com/suganthi05/chattyApp
+ * Server - https://github.com/suganthi05/Chatty_server
+ 
+### Screenshot
+* https://github.com/suganthi05/chattyApp/blob/master/docs/Screenshot%20from%202018-10-07%2019-33-31.png
+
+ 
