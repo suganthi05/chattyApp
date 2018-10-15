@@ -10,12 +10,14 @@ All dependencies can be found in the  client package.json
 Install the dependencies ,start the server and run the client.
 
 1. Clone the repo into a local directory and cd into chatty-client (`cd chatty-client`).
-2. Install dependencies using the `npm install` command. 
-   To run the websocket server:
+2. Install dependencies using the `npm install` command.
+
+  To run the websocket server:
 3. Open a new terminal window (cmd-n)
 4. cd into the chatty-app folder, and again into `chatty-server`
-5. Run the WebSocket server with `node server.js` 
-   To run the client:
+5. Run the WebSocket server with `node server.js`
+
+  To run the client:
 6. Go to <http://localhost:3000/> in your browser.
 7. Start the chat client using the `npm start` command. 
 8. Run the app at <http://localhost:3000/>.
