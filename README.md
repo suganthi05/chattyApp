@@ -13,10 +13,11 @@ Install the dependencies ,start the server and run the client.
 2. Install dependencies using the `npm install` command.
 3. Open a new terminal window (cmd-n)
 4. cd into the chatty-app folder, and again into `chatty-server`
-5. Run the WebSocket server with `node server.js`
-6. Go to <http://localhost:3000/> in your browser.
-7. Start the chat client using the `npm start` command. 
-8. Run the app at <http://localhost:3000/>.
+5. run `npm install` command
+6. Run the WebSocket server with `node server.js`
+7. Go to <http://localhost:3000/> in your browser.
+8. Start the chat client using the `npm start` command. 
+9. Run the app at <http://localhost:3000/>.
 
 
 ### Dependencies
